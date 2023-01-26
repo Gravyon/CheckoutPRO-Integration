@@ -21,8 +21,8 @@ node_modules
 *.sln
 *.sw?
 .gitignore
-package-lock.json
-package.json
+**.package-lock.json
+**.package.json
 #Enviroments
 **/.env
 server/.env
