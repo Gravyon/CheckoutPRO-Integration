@@ -20,7 +20,9 @@ node_modules
 *.njsproj
 *.sln
 *.sw?
-
+.gitignore
+package-lock.json
+package.json
 #Enviroments
 **/.env
 server/.env
