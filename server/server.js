@@ -4,8 +4,8 @@ dotenv.config();
 const PORT = process.env.PORT;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const express = require("express");
-const app = express();
 const cors = require("cors");
+const app = express();
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
 // const bodyParser = require("body-parser");
@@ -16,14 +16,13 @@ mercadopago.configure({
   access_token: ACCESS_TOKEN,
 });
 
-//middleware
+//middleware needed 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("../../client"));
 app.use(express.json());
 app.use(cors());
 
 // routes
-
 app.get("/", (req, res) => {
   res.send("Hello World");
 });

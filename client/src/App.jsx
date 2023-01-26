@@ -1,40 +1,43 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-const PUBLIC_KEY = import.meta.env.PUBLIC_KEY;
+// import { useMercadopago } from 'react-sdk-mercadopago';
+const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
 function App() {
   const [orderData, setOrderData] = useState({});
+  const url = "http://localhost:5000";
 
   const fetchPreference = async () => {
-    const res = await axios.post("/create_preference", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    });
-    const data = await res.json();
-
-    if (data.msg) {
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = "https://sdk.mercadopago.com/js/v2";
-      script.setAttribute("data-preference-id", data.msg);
-      document.body.appendChild(script);
-
-      const mercadopago = new MercadoPago(PUBLIC_KEY, {
-        locale: "es-UY", // The most common are: 'pt-BR', 'es-AR' and 'en-US'
+    try {
+      const res = await axios.post(`${url}/create_preference`, {
+        title: "title",
+        quantity: 2,
+        unit_price: 13,
       });
-      mp.checkout({
-        preference: {
-          id: data.msg,
-        },
-        render: {
-          container: ".cho-container",
-          label: "Pagar",
-        },
-      });
+      setOrderData(res.data);
+      console.log(res);
+      if (res.data.msg.id) {
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://sdk.mercadopago.com/js/v2";
+        script.setAttribute("data-preference-id", res.data.msg.id);
+        document.body.appendChild(script);
+        const mercadopago = new window.MercadoPago(PUBLIC_KEY.toString(), {
+          locale: "es-UY",
+        });
+        mercadopago.checkout({
+          preference: {
+            id: res.data.msg.id,
+          },
+          render: {
+            container: ".cho-container",
+            label: "Pagar",
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
-
   useEffect(() => {
     fetchPreference();
   }, []);
