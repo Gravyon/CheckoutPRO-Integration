@@ -2,7 +2,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT;
-
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -18,7 +17,7 @@ const router = require("./routes/routes");
 app.use("/", router);
 app.use("/create_preference", router);
 app.use("/feedback", router);
-
+app.use("/webhook", router);
 // start backend
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
