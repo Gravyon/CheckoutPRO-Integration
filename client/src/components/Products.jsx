@@ -33,6 +33,13 @@ export const Products = () => {
       unit_price: 1000,
       img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.R8SIG1MsoEIaCZlP868NugHaE8%26pid%3DApi&f=1&ipt=9eeec43897f8986f316c83c34f97797fe6cb0f8528bdedbea3446beef5d30c2d&ipo=images",
     },
+    {
+      id: 1232,
+      title: "Lamborghini",
+      description: "4 wheels",
+      unit_price: 110000,
+      img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.JjwjnIq8urXUKqmDwTPWZwHaEK%26pid%3DApi&f=1&ipt=f72b9c5197ae3f7bd9f44bf86bacef784f95fee1981187ac2828bf74cf26772d&ipo=images",
+    },
   ];
   return (
     <div>

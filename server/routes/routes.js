@@ -70,6 +70,7 @@ router.post("/create_preference", (req, res) => {
     notification_url:
       "https://webhook.site/3395e8a6-fe22-42c7-9cfa-9c9e9f4cf6b7",
     auto_return: "approved",
+    external_reference: "rdjmartinez95@gmail.com",
   };
   mercadopago.preferences
     .create(preference)
