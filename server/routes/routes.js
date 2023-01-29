@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 const {} = require;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-const PORT = process.env.PORT;
+const INTEGRATOR_ID = process.env.INTEGRATOR_ID;
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
 
 // Agrega credenciales
 mercadopago.configure({
   access_token: ACCESS_TOKEN,
+  integrator_id: INTEGRATOR_ID,
 });
 
 // routes
@@ -32,28 +33,23 @@ router.post("/create_preference", (req, res) => {
       },
     ],
     payer: {
+      address: {
+        zip_code: "1111",
+        street_name: "Calle",
+        street_number: 123,
+      },
+      email: "test_user_1296005698@testuser.com",
+      identification: {
+        number: "12345678",
+        type: "DNI",
+      },
       name: "Lalo",
       surname: "Landa",
-      email: "test_user_1296005698@testuser.com",
-      //No anda con estos datos por alguna razon
-      // phone: {
-      //   area_code: "11",
-      //   number: "22223333",
-      // },
-      // identification: {
-      //   type: "DNI",
-      //   number: "12345678",
-      // },
-      // address: {
-      //   street_name: "Calle",
-      //   street_number: 123,
-      //   zip_code: "1111",
-      // },
     },
     back_urls: {
-      success: `http://localhost:${PORT}/feedback`,
-      failure: `http://localhost:${PORT}/feedback`,
-      pending: `http://localhost:${PORT}/feedback`,
+      success: `http://localhost:5173/success`,
+      failure: `http://localhost:5173/failure`,
+      pending: `http://localhost:5173/pending`,
     },
     payment_methods: {
       excluded_payment_methods: [
@@ -68,7 +64,7 @@ router.post("/create_preference", (req, res) => {
       default_installments: 6,
     },
     notification_url:
-      "https://webhook.site/3395e8a6-fe22-42c7-9cfa-9c9e9f4cf6b7",
+      "https://webhook.site/3395e8a6-fe22-42c7-9cfa-9c9e9f4cf6b7/feedback",
     auto_return: "approved",
     external_reference: "rdjmartinez95@gmail.com",
   };
@@ -82,47 +78,14 @@ router.post("/create_preference", (req, res) => {
     });
 });
 
-//redirect
+// redirect
 router.get("/feedback", function (req, res) {
   res.json({
     Payment: req.query.payment_id,
     Status: req.query.status,
     MerchantOrder: req.query.merchant_order_id,
   });
-  res.send("Feedback");
 });
 
-//payment info
-
-router.post("/webhook", function (req, res) {
-  const payment_data = {
-    transaction_amount: Number(req.body.transactionAmount),
-    token: req.body.token,
-    description: req.body.description,
-    installments: Number(req.body.installments),
-    payment_method_id: req.body.paymentMethodId,
-    issuer_id: req.body.issuer,
-    notification_url: "http://requestbin.fullcontact.com/1ogudgk1",
-    payer: {
-      email: req.body.email,
-      identification: {
-        number: req.body.docNumber,
-      },
-    },
-  };
-
-  mercadopago.payment
-    .save(payment_data)
-    .then(function (response) {
-      res.status(response.status).json({
-        status: response.body.status,
-        status_detail: response.body.status_detail,
-        id: response.body.id,
-      });
-    })
-    .catch(function (error) {
-      res.status(response.status).send(error);
-    });
-});
 // So it can accessed in server.js
 module.exports = router;

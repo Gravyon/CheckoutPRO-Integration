@@ -17,7 +17,7 @@ const router = require("./routes/routes");
 app.use("/", router);
 app.use("/create_preference", router);
 app.use("/feedback", router);
-app.use("/webhook", router);
+
 // start backend
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
