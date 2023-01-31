@@ -6,6 +6,7 @@ import { Products } from "./components/Products";
 import { Failure } from "./pages/Failure";
 import { Success } from "./pages/Success";
 import { Pending } from "./pages/Pending";
+import Notification from "./pages/Notification";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/failure" element={<Failure />} />
           <Route path="/success" element={<Success />} />
           <Route path="/pending" element={<Pending />} />
+          <Route path="/notification" element={<Notification />} />
         </Routes>
       </Container>
     </Router>

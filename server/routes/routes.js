@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {} = require;
+const fs = require("fs");
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const INTEGRATOR_ID = process.env.INTEGRATOR_ID;
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
-
 // Agrega credenciales
 mercadopago.configure({
   access_token: ACCESS_TOKEN,
@@ -13,9 +13,9 @@ mercadopago.configure({
 });
 
 // routes
-router.get("/", (req, res) => {
-  res.send("Hello World");
-});
+// router.get("/", (req, res) => {
+//   res.send("Hello World");
+// });
 
 router.post("/create_preference", (req, res) => {
   const preference = {
@@ -52,19 +52,16 @@ router.post("/create_preference", (req, res) => {
       pending: `http://localhost:5173/pending`,
     },
     payment_methods: {
+      installments: 6,
+      default_installments: 6,
       excluded_payment_methods: [
         {
           id: "visa",
         },
       ],
-      excluded_payment_types: [{ id: "atm" }],
-
-      installments: 6,
-
-      default_installments: 6,
     },
     notification_url:
-      "https://webhook.site/3395e8a6-fe22-42c7-9cfa-9c9e9f4cf6b7/feedback",
+      "https://3c00-2804-39c8-40c1-c601-9d23-4026-dc72-6468.sa.ngrok.io/notification",
     auto_return: "approved",
     external_reference: "rdjmartinez95@gmail.com",
   };
@@ -79,12 +76,52 @@ router.post("/create_preference", (req, res) => {
 });
 
 // redirect
-router.get("/feedback", function (req, res) {
-  res.json({
-    Payment: req.query.payment_id,
-    Status: req.query.status,
-    MerchantOrder: req.query.merchant_order_id,
-  });
+router.post("/notification", async function (req, res) {
+  let data = req.body;
+  if (data["action"] == "payment.created") {
+    JSON.stringify(data);
+    console.log(data);
+  }
+  res.status(200).send({ result: "ok" });
+
+  // res.json({
+  //   Payment: req.query.payment_id,
+  //   Status: req.query.status,
+  //   MerchantOrder: req.query.merchant_order_id,
+  // });
+});
+
+router.post("/notifications", function (req, res) {
+  var payment_data = {
+    transaction_amount: Number(req.body.transactionAmount),
+    token: req.body.token,
+    description: req.body.description,
+    installments: Number(req.body.installments),
+    payment_method_id: req.body.paymentMethodId,
+    issuer_id: req.body.issuer,
+    notification_url:
+      "https://3c00-2804-39c8-40c1-c601-9d23-4026-dc72-6468.sa.ngrok.io",
+    payer: {
+      email: req.body.email,
+      identification: {
+        type: req.body.docType,
+        number: req.body.docNumber,
+      },
+    },
+  };
+
+  mercadopago.payment
+    .save(payment_data)
+    .then(function (response) {
+      res.status(response.status).json({
+        status: response.body.status,
+        status_detail: response.body.status_detail,
+        id: response.body.id,
+      });
+    })
+    .catch(function (error) {
+      res.status(response.status).send(error);
+    });
 });
 
 // So it can accessed in server.js

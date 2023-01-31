@@ -5,13 +5,10 @@ export const Success = () => {
   const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
   const [payment, setPayment] = React.useState({});
   const url = "http://localhost:5000";
-
+  const id = new URLSearchParams(location.search).get("payment_id");
   const getPayment = async () => {
     try {
-      //fetch backend
-      axios.get(`${url}/feedback`);
       // needed to extract id from the url
-      const id = new URLSearchParams(location.search).get("payment_id");
       const response = await axios.get(
         `https://api.mercadopago.com/v1/payments/${id}`,
         {
@@ -26,7 +23,6 @@ export const Success = () => {
       console.log(error);
     }
   };
-
   React.useEffect(() => {
     getPayment();
   }, []);
@@ -74,10 +70,10 @@ export const Success = () => {
         <div className="px-4 py-2 border border-green-500 rounded mb-2">
           External reference: {payment.external_reference}
         </div>
-        {/* 
+
         <div className="px-4 py-2 border border-green-500 rounded mb-2">
           Payment type: {payment.payment_type_id}
-        </div> */}
+        </div>
 
         {/* <div className="px-4 py-2 border border-green-500 rounded mb-2">
           Order ID: {payment.order.id}

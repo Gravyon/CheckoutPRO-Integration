@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 
 //middleware needed
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("../../client"));
 app.use(express.json());
 app.use(cors());
@@ -16,7 +16,7 @@ app.use(cors());
 const router = require("./routes/routes");
 app.use("/", router);
 app.use("/create_preference", router);
-app.use("/feedback", router);
+app.use("/notification", router);
 
 // start backend
 app.listen(PORT, () => {
