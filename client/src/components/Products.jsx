@@ -1,8 +1,6 @@
 import React from "react";
 import { Product } from "./Product";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { Container } from "@mui/material";
 
 export const Products = () => {
   const products = [
