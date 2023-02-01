@@ -2,5 +2,5 @@
 
 ##
 1. Clone this repo 
-2. Run > npm i
-3. >run dev / > yarn dev
+2. Then _npm i_
+3. _run dev_ /  _yarn dev_
