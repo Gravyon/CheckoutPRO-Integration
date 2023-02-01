@@ -5,10 +5,10 @@ import axios from "axios";
 const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
 export const Product = ({ prod }) => {
   const handleClick = async () => {
-    const url = "http://localhost:5000";
+    // const url = "http://localhost:5000";
     try {
       const res = await axios
-        .post(`${url}/create_preference`, prod)
+        .post(`/create_preference`, prod)
         .then((res) => (window.location.href = res.data.msg.init_point));
       console.log(res);
     } catch (error) {
