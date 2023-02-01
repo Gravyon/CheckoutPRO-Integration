@@ -64,7 +64,7 @@ router.post("/create_preference", (req, res) => {
       ],
     },
     notification_url:
-      "https://3c00-2804-39c8-40c1-c601-9d23-4026-dc72-6468.sa.ngrok.io/notification",
+      "https://1a64-2804-39c8-40c1-c601-79ac-e00e-3c63-1663.sa.ngrok.io/notification",
     auto_return: "approved",
     external_reference: "rdjmartinez95@gmail.com",
   };
@@ -79,12 +79,13 @@ router.post("/create_preference", (req, res) => {
 });
 
 // redirect
-router.post("/notification", async function (req, res) {
+router.post("/notification", function (req, res) {
   let data = req.body;
-  if (data["action"] == "payment.created") {
-    JSON.stringify(data);
-    console.log(data);
-  }
+  // if (data["action"] == "payment.created") {
+  //   JSON.stringify(data);
+  //   console.log(data);
+  // }
+  console.log(JSON.stringify(data));
   res.status(200).send({ result: "ok" });
 
   // res.json({

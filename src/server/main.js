@@ -4,6 +4,7 @@ const ViteExpress = require("vite-express");
 const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const app = express();
 // const PORT = import.meta.env.VITE_PORT;
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./src/server"));
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json({ type: "application/*+json" }));
 
 // router
 const router = require("./routes/routes");
