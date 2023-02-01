@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {} = require;
 const fs = require("fs");
-const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
-const INTEGRATOR_ID = process.env.INTEGRATOR_ID;
+const ACCESS_TOKEN = process.env.VITE_ACCESS_TOKEN;
+const INTEGRATOR_ID = process.env.VITE_INTEGRATOR_ID;
 // SDK de Mercado Pago
 const mercadopago = require("mercadopago");
 // Agrega credenciales
@@ -12,10 +12,13 @@ mercadopago.configure({
   integrator_id: INTEGRATOR_ID,
 });
 
-// routes
-// router.get("/", (req, res) => {
-//   res.send("Hello World");
-// });
+//routes
+router.get("/hello", (req, res) => {
+  res.send("Hello Vite + React!");
+});
+router.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 router.post("/create_preference", (req, res) => {
   const preference = {
