@@ -2,5 +2,5 @@
 
 ##
 1. Clone this repo 
-2. Then _npm i_
+2. Then <sub>_npm i_ </sub>	
 3. And finally > _run dev_ or  _yarn dev_
