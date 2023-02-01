@@ -3,12 +3,12 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+const BACK_URL = import.meta.env.VITE_BACK_URL;
 export const Product = ({ prod }) => {
   const handleClick = async () => {
-    // const url = "http://localhost:5000";
     try {
       const res = await axios
-        .post(`/create_preference`, prod)
+        .post(`${BACK_URL}/create_preference`, prod)
         .then((res) => (window.location.href = res.data.msg.init_point));
       console.log(res);
     } catch (error) {
@@ -33,7 +33,6 @@ export const Product = ({ prod }) => {
         Price $ {prod.unit_price}
       </Card.Title>
       <div className="mb-2">
-
         <Button onClick={handleClick} className="w-100">
           Pagar la compra
         </Button>
