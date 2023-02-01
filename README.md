@@ -7,7 +7,7 @@
 ```
 $ npm install
 ```
-3.
+3. Start the backend and frontend
 ```bash
 $ npm run dev or yarn dev
 ```
